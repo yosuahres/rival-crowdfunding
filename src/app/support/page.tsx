@@ -98,13 +98,16 @@ export default function SupportPage() {
       </div>
 
       <p className="bg-gradient-to-r from-[#bdb88e] via-[#ffffff] to-[#8eac7a] bg-clip-text text-center text-lg font-bold tracking-tight text-transparent">
-        #YourSupportMatters
+        #SupportTheDream
       </p>
 
       <p className="-mt-6 w-full text-justify text-sm leading-relaxed text-white/80 sm:text-base">
-        Welcome to Rival&apos;s <span className="font-semibold text-white">#GibranJamet</span>{" "}
-        Crowdfunding Program. Gibran jamet banget gilak.{" "}
-        <span className="font-semibold text-white">#GibranJamet⚡</span>
+        Welcome to the RIVAL Crowd Funding! Space exploration is our shared dream. Starting today,
+        you can join us in exploring space further by helping us build a rover, a space exploration
+        robot! RIVAL ITS is the first rover team to represent Indonesia in the{" "}
+        <span className="font-bold text-white">Australian Rover Challenge 2026</span>, international
+        rover competition! We are currently working hard to design and build a rover that meets the
+        needs of space exploration.
       </p>
 
       <div className="flex w-full items-start gap-0">
