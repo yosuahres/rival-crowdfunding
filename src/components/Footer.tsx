@@ -97,23 +97,26 @@ export default function Footer() {
             {/* Our Team */}
             <div className="flex flex-col gap-3">
               <h3 className="mb-1 text-sm font-semibold text-[#4ade80]">Our Team</h3>
-              <Link href="/" className="text-sm text-white/70 transition-colors hover:text-white">
+              <Link
+                href="https://rivalits.vercel.app/"
+                className="text-sm text-white/70 transition-colors hover:text-white"
+              >
                 Home
               </Link>
               <Link
-                href="/#about"
+                href="https://rivalits.vercel.app/teams"
                 className="text-sm text-white/70 transition-colors hover:text-white"
               >
                 About Us
               </Link>
               <Link
-                href="/#contact"
+                href="https://rivalits.vercel.app/contact"
                 className="text-sm text-white/70 transition-colors hover:text-white"
               >
                 Contact Us
               </Link>
               <Link
-                href="/#cars"
+                href="https://rivalits.vercel.app/competitions/australian-rover-challenge"
                 className="text-sm text-white/70 transition-colors hover:text-white"
               >
                 Rover
@@ -138,7 +141,7 @@ export default function Footer() {
 
         {/* Bottom section */}
         <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <p className="text-xs text-white/50">Copyright 2025 &copy; RIVAL ITS Team</p>
+          <p className="text-xs text-white/50">Copyright 2026 &copy; RIVAL ITS Team</p>
           <p className="text-right text-xs text-white/50">
             Institut Teknologi Sepuluh Nopember, Surabaya,
             <br />

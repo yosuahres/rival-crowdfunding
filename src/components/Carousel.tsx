@@ -5,7 +5,6 @@ import { useEffect, useState, useCallback } from "react";
 
 interface CarouselProps {
   images: { src: string; alt: string }[];
-  /** Auto-advance interval in ms (default 4000) */
   interval?: number;
 }
 
@@ -28,19 +27,17 @@ export default function Carousel({ images, interval = 4000 }: CarouselProps) {
 
   return (
     <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl">
-      {/* Slides */}
       <div
         className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
         {images.map((img, i) => (
           <div key={i} className="relative w-full flex-shrink-0" style={{ aspectRatio: "3 / 1" }}>
-            <Image src={img.src} alt={img.alt} fill className="object-cover" priority={i === 0} />
+            <Image src={img.src} alt={img.alt} fill className="object-cover " priority={i === 0} />
           </div>
         ))}
       </div>
 
-      {/* Prev / Next buttons */}
       <button
         onClick={prev}
         aria-label="Previous slide"
@@ -78,7 +75,6 @@ export default function Carousel({ images, interval = 4000 }: CarouselProps) {
         </svg>
       </button>
 
-      {/* Dots */}
       <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2">
         {images.map((_, i) => (
           <button

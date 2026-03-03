@@ -1,13 +1,16 @@
 import ProgressBar from "@/components/ProgressBar";
 import Carousel from "@/components/Carousel";
 
-const CURRENT_AMOUNT = 4_500_000;
+const CURRENT_AMOUNT = 3_100_000;
 
-const GOAL_AMOUNT = 20_000_000;
+const GOAL_AMOUNT = 50_000_000;
 
 const CAROUSEL_IMAGES = [
-  { src: "/assets/gemas.png", alt: "Rival slide 1" },
-  { src: "/assets/izin.png", alt: "Rival slide 2" },
+  { src: "/assets/carousel-front/slide1.jpg", alt: "Rival slide 1" },
+  { src: "/assets/carousel-front/slide2.jpg", alt: "Rival slide 2" },
+  { src: "/assets/carousel-front/slide3.jpg", alt: "Rival slide 3" },
+  // { src: "/assets/carousel-front/slide4.jpg", alt: "Rival slide 4" },
+  { src: "/assets/carousel-front/slide5.jpg", alt: "Rival slide 5" },
 ];
 
 export default function Home() {
