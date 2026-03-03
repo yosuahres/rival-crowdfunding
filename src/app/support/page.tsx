@@ -35,7 +35,7 @@ export default function SupportPage() {
     {
       id: 1,
       name: "Package 1",
-      price: 350000,
+      price: 200000,
       perks: "Placement name rover (h=0.5 cm), Keychain 1, Sticker, Website mention",
     },
     {
@@ -50,13 +50,6 @@ export default function SupportPage() {
       price: 600000,
       perks:
         "Placement name rover (h=1.5 cm) and IG, Sticker, Keychain 3, Sticker, Website mention",
-    },
-    {
-      id: 4,
-      name: "Package 4",
-      price: 1000000,
-      perks:
-        "Placement name rover (h=2 cm) and IG, Keychain 4, Sticker, Website mention, Gacoan Bareng VIP Access",
     },
   ];
 
