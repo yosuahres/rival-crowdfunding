@@ -23,6 +23,7 @@ export default function SupportPage() {
   const [proofUploadMsg, setProofUploadMsg] = useState("");
   const [proofUploadError, setProofUploadError] = useState("");
   const [uploadedProofPath, setUploadedProofPath] = useState("");
+  const [proofUploaded, setProofUploaded] = useState(false);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -112,6 +113,7 @@ export default function SupportPage() {
       setUploadedProofPath(result.path || "");
       setProofUploadMsg("Bukti Transfer berhasil diunggah. Terima kasih!");
       setTransferProofFile(null);
+      setProofUploaded(true);
     } catch {
       setProofUploadError("Network error while uploading transfer proof.");
     } finally {
@@ -170,8 +172,46 @@ export default function SupportPage() {
         </div>
       </div>
 
+      {/* Thank You After Proof Upload */}
+      {proofUploaded && (
+        <div className="flex w-full flex-col items-center gap-6 rounded-2xl border border-[#8eac7a]/30 bg-[#145127]/40 p-10 text-center">
+          <svg
+            width="64"
+            height="64"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#8eac7a"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+          <h3 className="text-2xl font-bold text-white">Terima Kasih!</h3>
+          <p className="text-sm leading-relaxed text-white/80">
+            Bukti donasi Anda telah berhasil diunggah.
+            <br />
+            Tim kami akan segera memverifikasi donasi Anda.
+          </p>
+          {paymentData && (
+            <div className="flex flex-col gap-1">
+              <p className="text-xs text-white/50">Invoice</p>
+              <p className="font-mono text-sm font-bold text-[#8eac7a]">
+                {paymentData.invoice_number}
+              </p>
+            </div>
+          )}
+          {uploadedProofPath && <p className="text-xs text-white/40">File: {uploadedProofPath}</p>}
+          <p className="mt-2 text-xs leading-relaxed text-white/50">
+            Anda dapat menutup halaman ini. Kami akan mengirimkan konfirmasi ke email Anda setelah
+            verifikasi.
+          </p>
+        </div>
+      )}
+
       {/* QRIS Payment View */}
-      {paymentData && paymentStatus === "pending" && (
+      {!proofUploaded && paymentData && paymentStatus === "pending" && (
         <div className="flex w-full flex-col items-center gap-6 text-center">
           <h3 className="text-xl font-bold text-white">Scan QRIS to Pay</h3>
           <p className="text-sm text-white/70">
@@ -200,7 +240,7 @@ export default function SupportPage() {
           </p>
 
           <div className="w-full rounded-2xl border border-white/20 bg-black/20 p-4 text-left">
-            <p className="text-sm font-semibold text-white">Bukti Pembayaran</p>
+            <p className="text-sm font-semibold text-white">Bukti Donasi</p>
             <p className="mt-1 text-xs text-white/60">Format: JPG, PNG, PDF (max 5MB)</p>
 
             <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">

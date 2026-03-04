@@ -24,6 +24,7 @@ export default async function DonationsPage() {
               <th className="p-4 font-semibold">Bukti Pembayaran</th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-100">
             {donations?.map((d) => (
               <tr key={d.id} className="hover:bg-gray-50 transition-colors">
