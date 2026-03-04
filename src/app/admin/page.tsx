@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import ExportExcelButton from "@/components/ExportExcelButton";
+import ProofViewer from "@/components/ProofViewer";
 
 export default async function DonationsPage() {
   const supabase = await createClient();
@@ -20,6 +21,7 @@ export default async function DonationsPage() {
               <th className="p-4 font-semibold">Total</th>
               <th className="p-4 font-semibold">Status</th>
               <th className="p-4 font-semibold">Tanggal</th>
+              <th className="p-4 font-semibold">Bukti Pembayaran</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
@@ -44,6 +46,9 @@ export default async function DonationsPage() {
                 </td>
                 <td className="p-4 text-sm text-gray-500">
                   {new Date(d.created_at!).toLocaleDateString()}
+                </td>
+                <td className="p-4">
+                  <ProofViewer invoiceNumber={d.doku_reference_id} />
                 </td>
               </tr>
             ))}

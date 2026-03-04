@@ -18,6 +18,11 @@ export default function SupportPage() {
   const [paymentData, setPaymentData] = useState<PaymentData | null>(null);
   const [paymentStatus, setPaymentStatus] = useState<"pending" | "success" | "failed">("pending");
   const [errorMsg, setErrorMsg] = useState("");
+  const [transferProofFile, setTransferProofFile] = useState<File | null>(null);
+  const [proofUploading, setProofUploading] = useState(false);
+  const [proofUploadMsg, setProofUploadMsg] = useState("");
+  const [proofUploadError, setProofUploadError] = useState("");
+  const [uploadedProofPath, setUploadedProofPath] = useState("");
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -76,6 +81,43 @@ export default function SupportPage() {
     const interval = setInterval(pollStatus, 5000);
     return () => clearInterval(interval);
   }, [paymentData, paymentStatus, pollStatus]);
+
+  const uploadTransferProof = async () => {
+    if (!paymentData || !transferProofFile) {
+      setProofUploadError("Please choose a file first.");
+      return;
+    }
+
+    setProofUploadError("");
+    setProofUploadMsg("");
+    setProofUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("invoice_number", paymentData.invoice_number);
+      formData.append("file", transferProofFile);
+
+      const res = await fetch("/api/donations/proof", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        setProofUploadError(result.error || "Failed to upload transfer proof.");
+        return;
+      }
+
+      setUploadedProofPath(result.path || "");
+      setProofUploadMsg("Bukti Transfer berhasil diunggah. Terima kasih!");
+      setTransferProofFile(null);
+    } catch {
+      setProofUploadError("Network error while uploading transfer proof.");
+    } finally {
+      setProofUploading(false);
+    }
+  };
 
   return (
     <main className="mx-auto flex max-w-3xl flex-col items-center gap-10 px-4 py-16 sm:px-6 lg:px-8">
@@ -156,6 +198,38 @@ export default function SupportPage() {
           <p className="text-xs text-white/50">
             Invoice: <span className="font-mono">{paymentData.invoice_number}</span>
           </p>
+
+          <div className="w-full rounded-2xl border border-white/20 bg-black/20 p-4 text-left">
+            <p className="text-sm font-semibold text-white">Bukti Pembayaran</p>
+            <p className="mt-1 text-xs text-white/60">Format: JPG, PNG, PDF (max 5MB)</p>
+
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png,.pdf"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  setTransferProofFile(file);
+                  setProofUploadError("");
+                }}
+                className="w-full rounded-lg border border-white/20 bg-transparent px-3 py-2 text-sm text-white file:mr-3 file:rounded-md file:border-0 file:bg-[#145127] file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white"
+              />
+              <button
+                type="button"
+                onClick={uploadTransferProof}
+                disabled={proofUploading || !transferProofFile}
+                className="inline-flex items-center justify-center rounded-lg bg-[#145127] px-4 py-2 text-sm font-medium text-white transition-all hover:bg-[#1a6b34] disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {proofUploading ? "Uploading..." : "Upload"}
+              </button>
+            </div>
+
+            {proofUploadMsg && <p className="mt-3 text-xs text-[#8eac7a]">{proofUploadMsg}</p>}
+            {uploadedProofPath && (
+              <p className="mt-1 text-xs text-white/50">File: {uploadedProofPath}</p>
+            )}
+            {proofUploadError && <p className="mt-3 text-xs text-red-400">{proofUploadError}</p>}
+          </div>
 
           <a
             href="/assets/code.jpeg"
@@ -291,6 +365,10 @@ export default function SupportPage() {
               if (result.payment) {
                 setPaymentData(result.payment);
                 setPaymentStatus("pending");
+                setTransferProofFile(null);
+                setProofUploadMsg("");
+                setProofUploadError("");
+                setUploadedProofPath("");
               } else {
                 setErrorMsg("Payment generation failed. Please try again.");
               }

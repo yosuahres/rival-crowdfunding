@@ -25,12 +25,8 @@ export async function POST(request: Request) {
 
     if (!isValid) {
       console.error("DOKU notification: invalid signature");
-      // Still process — some DOKU notification formats may differ
-      // return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
     }
 
-    // ── Extract payment info ──
-    // SNAP notifications can have different formats
     const invoiceNumber =
       body.partnerReferenceNo || body.originalPartnerReferenceNo || body.order?.invoice_number;
 
@@ -41,8 +37,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing invoice number" }, { status: 400 });
     }
 
-    // Map DOKU status to our status
-    // SNAP: "00" = Success, "06" = Failed/Expired
     let paymentStatus: "success" | "failed" | "pending" = "pending";
     if (txnStatus === "00" || txnStatus === "SUCCESS") {
       paymentStatus = "success";
@@ -55,7 +49,6 @@ export async function POST(request: Request) {
       paymentStatus = "failed";
     }
 
-    // ── Update donation in Supabase ──
     const supabase = await createClient();
 
     const { error } = await supabase
